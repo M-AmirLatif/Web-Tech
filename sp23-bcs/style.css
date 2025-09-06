@@ -1,0 +1,129 @@
+.container{
+    background-size: cover;
+    background-color: lightgray;
+    background-image: url('pic2.jpg');
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 100%;
+}
+
+.top-bar a {
+  color: white;
+}
+
+.texttwo{
+    padding-top: 150px;
+    padding-left: 20px;
+}
+.text{
+    padding-top: 100px;
+}
+
+.cosmeticsPicstwo{
+
+    display: flex;
+    padding-bottom: 250px;
+}
+.cosmeticsPics{
+    display: flex;
+    padding: 300px 200px;
+}
+.firstText{
+    font-weight: bold;
+}
+
+.lowertext{
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 50px;
+    font-weight: 500;
+
+}
+.myimg{
+    padding-left: 50px;
+}
+.tables{ 
+    margin-right: 35px;
+    font-size: 30px;
+    font-weight: lighter;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 100px;
+}
+
+.tablescontent{
+    font-size: 20px;
+    font-weight: 300;
+    display: flex;
+    justify-items: center;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-left: 90px;
+    margin-right: 90px;
+}
+.firstend{
+    margin-left: 100px;
+    margin-top: 100px;
+}
+
+.ending{
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 50px;
+}
+.content {
+    border-left: 1px solid black;
+    height: 250px;  
+    margin: 0 auto;
+    padding-left: 10px;
+}
+
+.thirdText{
+    color: white;
+    display: inline-block;
+    background-color: blue;
+    padding: 8px 16px;
+}
+.texts{
+    color: white;
+    padding: 60px 430px;
+}
+.top-bar{
+    color: white;
+    font-size: large;
+    font-weight: 250px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 50px;
+}
+
+.right,.left{
+    color: white;
+    display: flex;
+    gap: 20px;
+}
+
+.sec{
+    border-radius: 10px;
+    display: flex;
+    background-color: white;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 50px;
+    gap: 50px;
+    margin: 20px;
+}
+
+.two{
+    display: flex;
+    background-color: white;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 50px;
+    gap: 50px;
+    margin: 20px;
+}
