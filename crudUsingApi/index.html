@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>jQuery CRUD Demo</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>My jQuery CRUD Project</h1>
+
+  <!-- Post Form -->
+  <form id="postForm">
+    <input type="hidden" id="postId" />
+    <input type="text" id="title" placeholder="Title" required />
+    <textarea id="body" placeholder="Body" required></textarea>
+    <button type="submit">Save</button>
+  </form>
+
+  <!-- Posts Table -->
+  <table id="postsTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Body</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Posts will be inserted here -->
+    </tbody>
+  </table>
+
+  <!-- Load jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <!-- Load our app -->
+  <script src="app.js"></script>
+</body>
+</html>
