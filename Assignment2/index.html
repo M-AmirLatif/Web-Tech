@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Checkout Page</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container my-5">
+
+    <!-- Progress Header -->
+    <div class="progress-steps mb-4 text-center">
+      <span>Cart →</span>
+      <span>Address →</span>
+      <span class="active">Payment →</span>
+      <span>Review</span>
+    </div>
+
+    <div class="row g-5">
+      <!-- Left: Form -->
+      <div class="col-12 col-md-7">
+
+        <!-- One form wrapping everything that must validate -->
+        <form id="checkoutForm" novalidate>
+          <!-- Customer & Shipping details card-->
+          <div class="card mb-4">
+            <div class="card-body">
+              <h5 class="mb-3">Customer & Shipping Details</h5>
+
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label for="fullName" class="form-label">Full Name</label>
+                  <input id="fullName" name="fullName" type="text" class="form-control" placeholder="Type name here" required aria-describedby="fullNameFeedback">
+                  <div id="fullNameFeedback" class="invalid-feedback"></div>
+                </div>
+
+                <div class="col-md-6">
+                  <label for="email" class="form-label">Email</label>
+                  <input id="email" name="email" type="email" class="form-control" placeholder="example@mail.com" required aria-describedby="emailFeedback">
+                  <div id="emailFeedback" class="invalid-feedback"></div>
+                </div>
+
+                <div class="col-md-6">
+                  <label for="phone" class="form-label">Phone</label>
+                  <input id="phone" name="phone" type="tel" class="form-control" placeholder="03001234567" required aria-describedby="phoneFeedback">
+                  <div id="phoneFeedback" class="invalid-feedback"></div>
+                </div>
+
+                <div class="col-md-6">
+                  <label for="city" class="form-label">City</label>
+                  <input id="city" name="city" type="text" class="form-control" placeholder="Karachi" required aria-describedby="cityFeedback">
+                  <div id="cityFeedback" class="invalid-feedback"></div>
+                </div>
+
+                <div class="col-12">
+                  <label for="address" class="form-label">Address</label>
+                  <input id="address" name="address" type="text" class="form-control" placeholder="Street address" required aria-describedby="addressFeedback">
+                  <div id="addressFeedback" class="invalid-feedback"></div>
+                </div>
+
+                <div class="col-md-6">
+                  <label for="postal" class="form-label">Postal Code</label>
+                  <input id="postal" name="postal" type="text" class="form-control" placeholder="12345" required aria-describedby="postalFeedback">
+                  <div id="postalFeedback" class="invalid-feedback"></div>
+                </div>
+
+                <div class="col-md-6">
+                  <label for="country" class="form-label">Country</label>
+                  <select id="country" name="country" class="form-select" required aria-describedby="countryFeedback">
+                    <option value="">Choose...</option>
+                    <option>Pakistan</option>
+                    <option>India</option>
+                    <option>USA</option>
+                  </select>
+                  <div id="countryFeedback" class="invalid-feedback"></div>
+                </div>
+
+                <div class="col-12">
+                  <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="sameAddress" name="sameAddress">
+                    <label class="form-check-label" for="sameAddress">Billing address same as shipping</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Payment Section -->
+          <div class="card mb-4">
+            <div class="card-body">
+              <h5 class="mb-3">Payment Method</h5>
+
+              <!-- Payment radios -->
+              <div id="paymentGroup" class="mb-2">
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="payment" id="payCard" value="card" checked>
+                  <label class="form-check-label" for="payCard">Credit/Debit Card</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="payment" id="payCod" value="cod">
+                  <label class="form-check-label" for="payCod">Cash on Delivery</label>
+                </div>
+                <div class="form-check">
+                  <input class="form-check-input" type="radio" name="payment" id="payWallet" value="wallet">
+                  <label class="form-check-label" for="payWallet">Wallet</label>
+                </div>
+                <div class="invalid-feedback" id="paymentFeedback"></div>
+              </div>
+
+              <!-- Card-only fields -->
+              <div id="cardFields" class="row g-3 mt-0">
+                <div class="col-md-6">
+                  <label for="cardName" class="form-label">Cardholder Name</label>
+                  <input id="cardName" name="cardName" type="text" class="form-control" aria-describedby="cardNameFeedback">
+                  <div id="cardNameFeedback" class="invalid-feedback"></div>
+                </div>
+
+                <div class="col-md-6">
+                  <label for="cardNumber" class="form-label">Card Number</label>
+                  <input id="cardNumber" name="cardNumber" type="text" class="form-control" placeholder="xxxx xxxx xxxx xxxx" aria-describedby="cardNumberFeedback" inputmode="numeric">
+                  <div id="cardNumberFeedback" class="invalid-feedback"></div>
+                </div>
+
+                <div class="col-md-6">
+                  <label for="expiry" class="form-label">Expiry</label>
+                  <input id="expiry" name="expiry" type="text" class="form-control" placeholder="MM/YY" aria-describedby="expiryFeedback" inputmode="numeric" maxlength="5">
+                  <div id="expiryFeedback" class="invalid-feedback"></div>
+                </div>
+
+                <div class="col-md-6">
+                  <label for="cvv" class="form-label">CVV</label>
+                  <input id="cvv" name="cvv" type="password" class="form-control" placeholder="123" aria-describedby="cvvFeedback" inputmode="numeric" maxlength="4">
+                  <div id="cvvFeedback" class="invalid-feedback"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Terms + Submit -->
+          <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" id="termsCheck" name="terms">
+            <label class="form-check-label" for="termsCheck">I agree to the Terms & Conditions</label>
+            <div id="termsFeedback" class="invalid-feedback"></div>
+          </div>
+
+          <button class="btn btn-primary w-100" id="placeOrderBtn" type="submit" disabled>Place Order</button>
+        </form>
+      </div>
+
+      <!-- Right: Order Summary -->
+      <div class="col-12 col-md-5">
+        <div class="card position-sticky top-0">
+          <div class="card-body">
+            <h5 class="mb-3">Order Summary</h5>
+            <ul class="list-group mb-3">
+              <li class="list-group-item d-flex justify-content-between">
+                Product A <span>$20</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                Product B <span>$40</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                Subtotal <span>$60</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                Shipping <span>$5</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                Tax <span>$3</span>
+              </li>
+              <li class="list-group-item d-flex justify-content-between fw-bold">
+                Total <span>$68</span>
+              </li>
+            </ul>
+
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Coupon code">
+              <button class="btn btn-outline-primary">Apply</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /row -->
+  </div><!-- /container -->
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+  <script src="validation.js"></script>
+</body>
+</html>
