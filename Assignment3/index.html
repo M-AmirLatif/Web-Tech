@@ -1,39 +1,27 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>jQuery CRUD Demo</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js"></script>
+    <script src="app.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+
+    <title>API Client</title>
+
 </head>
-<body>
-  <h1>My jQuery CRUD Project</h1>
 
-  <!-- Post Form -->
-  <form id="postForm">
-    <input type="hidden" id="postId" />
-    <input type="text" id="title" placeholder="Title" required />
-    <textarea id="body" placeholder="Body" required></textarea>
-    <button type="submit">Save</button>
-  </form>
+<body class="container">
 
-  <!-- Posts Table -->
-  <table id="postsTable">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Title</th>
-        <th>Body</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <!-- Posts will be inserted here -->
-    </tbody>
-  </table>
+    <h1>Recipes API Client</h1>
+    <button id="mybtn" class="btn btn-info">Add Story</button>
+    <div id="stories">
+      recipies will load here
+    </div>
 
-  <!-- Load jQuery -->
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-  <!-- Load our app -->
-  <script src="app.js"></script>
 </body>
 </html>
