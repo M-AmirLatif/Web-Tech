@@ -1,0 +1,26 @@
+extends ../layout
+
+block content
+  h1 Product List
+
+  a(href="/admin/products/add") Add New Product
+
+  table(border="1", cellpadding="10", cellspacing="0")
+    tr
+      th Name
+      th Price
+      th Category
+      th Actions
+
+    each product in products
+      tr
+        td= product.name
+        td $#{product.price}
+        td= product.category
+        td
+          a(href=`/admin/products/edit/${product._id}`) Edit
+          |  |
+          a(
+            href=`/admin/products/delete/${product._id}`,
+            onclick="return confirm('Delete this product?')"
+          ) Delete

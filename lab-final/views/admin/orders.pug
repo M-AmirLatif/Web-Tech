@@ -1,0 +1,37 @@
+extends ../layout
+
+block content
+  h1 Admin Orders Dashboard
+
+  if !orders || orders.length === 0
+    p No orders found.
+  else
+    table(border="1" cellpadding="8")
+      thead
+        tr
+          th Order ID
+          th Customer Name
+          th Total Amount
+          th Status
+          th Order Date
+          th Actions
+      tbody
+        each order in orders
+          tr
+            td #{order._id}
+            td #{order.customerName}
+            td $#{order.totalAmount}
+            td #{order.status}
+            td #{new Date(order.createdAt).toLocaleString()}
+            td
+              // Confirm button (only if not already Confirmed)
+              if order.status !== 'Confirmed'
+                form(method="POST", action=`/admin/orders/${order._id}/confirm`, style="display:inline")
+                  button(type="submit") Confirm
+
+              |  
+
+              // Cancel button (only if not already Cancelled)
+              if order.status !== 'Cancelled'
+                form(method="POST", action=`/admin/orders/${order._id}/cancel`, style="display:inline")
+                  button(type="submit") Cancel

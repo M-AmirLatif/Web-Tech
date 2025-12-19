@@ -1,0 +1,20 @@
+extends ../layout
+
+block content
+  h2 Order Confirmed 🎉
+
+  p
+    strong Order ID:
+    |  #{order._id}
+
+  p
+    strong Status:
+    |  #{order.status}
+
+  p
+    strong Total:
+    |  $#{order.totalAmount}
+
+  ul
+    each item in order.items
+      li #{item.name} - #{item.quantity} × $#{item.price}

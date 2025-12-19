@@ -1,0 +1,51 @@
+extends ../layout
+
+block content
+  h1 Shop
+
+  // Filter Form
+  form(method="GET", action="/shop")
+    label Category:
+    select(name="category")
+      option(value="") All
+      option(value="electronics") Electronics
+      option(value="fashion") Fashion
+
+    label Min Price:
+    input(type="number", name="minPrice")
+
+    label Max Price:
+    input(type="number", name="maxPrice")
+
+    button(type="submit") Filter
+
+  hr
+
+  // Products
+  if products.length === 0
+    p No products found.
+  else
+    .products
+      each product in products
+        .product-card
+          h3= product.name
+          p Price: $#{product.price}
+          p Category: #{product.category}
+          a.button(href=`/product/${product._id}`) View Product
+
+
+          // 👉 ADD TO CART FORM (HERE)
+          form(method="POST", action=`/cart/add/${product._id}`)
+            button(type="submit") Add to Cart
+
+  hr
+
+  // Pagination
+  .pagination
+    if currentPage > 1
+      a(href=`/shop?page=${currentPage - 1}&limit=${limit}`) Previous
+
+    span Page #{currentPage} of #{totalPages}
+
+    if currentPage < totalPages
+      a(href=`/shop?page=${currentPage + 1}&limit=${limit}`) Next
