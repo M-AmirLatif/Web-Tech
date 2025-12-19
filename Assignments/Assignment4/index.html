@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simple CRUD App</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <h2>CRUD App (HTML + CSS + jquery)</h2>
+
+  <div class="form-container">
+    <input type="text" id="name" placeholder="Enter Name">
+    <input type="text" id="email" placeholder="Enter Email">
+    <button id="submitBtn">Add</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="datatable"></tbody>
+  </table>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Product Calculator</title>
+  </head>
+  <body>
+    <h2>Product Calculator</h2>
+
+    <label>Price:</label><br />
+    <input type="number" id="price" /><br /><br />
+
+    <label>Discount (%):</label><br />
+    <input type="number" id="discount" /><br /><br />
+
+    <label>Tax (%):</label><br />
+    <input type="number" id="tax" /><br /><br />
+
+    <label>Tags (comma separated):</label><br />
+    <input
+      type="text"
+      id="tags"
+      placeholder="electronics, mobile, sale"
+    /><br /><br />
+
+    <label>Find Tag:</label><br />
+    <input type="text" id="findTag" /><br /><br />
+
+    <label>Calculation Type:</label><br />
+    <select id="method">
+      <option value="finalPrice">Final Price (Discount + Tax)</option>
+      <option value="onlyDiscount">Only Discount</option>
+      <option value="onlyTax">Only Tax</option>
+      <option value="checkTag">Check Tag</option>
+    </select>
+
+    <br /><br />
+
+    <button onclick="calculate()">Calculate</button>
+
+    <h3 id="result"></h3>
+
+    <script>
+      async function calculate() {
+        const price = Number(document.getElementById('price').value)
+        const discount = Number(document.getElementById('discount').value)
+        const tax = Number(document.getElementById('tax').value)
+        const tagsInput = document.getElementById('tags').value
+        const findTag = document.getElementById('findTag').value
+        const method = document.getElementById('method').value
+
+        const tags = tagsInput
+          .split(',')
+          .map((tag) => tag.trim())
+          .filter((tag) => tag.length > 0)
+
+        const response = await fetch(`/product/calculate/${method}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            price,
+            discount,
+            tax,
+            tags,
+            findTag,
+          }),
+        })
+
+        const data = await response.json()
+
+        const resultEl = document.getElementById('result')
+
+        if (data.result !== undefined) {
+          resultEl.innerText = `Result: ${data.result.toFixed(2)}`
+        } else if (data.exists !== undefined) {
+          resultEl.innerText = data.exists
+            ? 'Tag exists ✅'
+            : 'Tag does not exist ❌'
+        } else {
+          resultEl.innerText = `Error: ${data.error}`
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Movie Management</title>
+  </head>
+  <body>
+    <h2>🎬 Movie Management App</h2>
+
+    <hr />
+
+    <h3>Add Movie</h3>
+    <input id="title" placeholder="Title" /><br /><br />
+    <input id="genre" placeholder="Genre" /><br /><br />
+    <input
+      id="rating"
+      type="number"
+      step="0.1"
+      placeholder="Rating (0-10)"
+    /><br /><br />
+    <input id="year" type="number" placeholder="Year" /><br /><br />
+    <button onclick="addMovie()">Add Movie</button>
+
+    <pre id="addResult"></pre>
+
+    <hr />
+
+    <h3>List Movies</h3>
+    <input id="filterGenre" placeholder="Filter by genre" />
+    <input id="minRating" type="number" step="0.1" placeholder="Min rating" />
+    <input id="page" type="number" placeholder="Page" value="1" />
+    <input id="limit" type="number" placeholder="Limit" value="5" />
+    <button onclick="getMovies()">Get Movies</button>
+
+    <pre id="movieList"></pre>
+
+    <hr />
+
+    <h3>Get Movie By ID</h3>
+    <input id="movieId" type="number" placeholder="Movie ID" />
+    <button onclick="getMovieById()">Get Movie</button>
+
+    <pre id="movieById"></pre>
+
+    <hr />
+
+    <h3>Update Movie Rating</h3>
+    <input id="rateMovieId" type="number" placeholder="Movie ID" />
+    <input id="newRating" type="number" step="0.1" placeholder="New Rating" />
+    <button onclick="updateRating()">Update Rating</button>
+
+    <pre id="ratingResult"></pre>
+
+    <script>
+      async function addMovie() {
+        const response = await fetch('/movies', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            title: title.value,
+            genre: genre.value,
+            rating: Number(rating.value),
+            year: Number(year.value),
+          }),
+        })
+
+        addResult.innerText = JSON.stringify(await response.json(), null, 2)
+      }
+
+      async function getMovies() {
+        const params = new URLSearchParams({
+          genre: filterGenre.value,
+          minRating: minRating.value,
+          page: page.value,
+          limit: limit.value,
+        })
+
+        const response = await fetch(`/movies?${params.toString()}`)
+        movieList.innerText = JSON.stringify(await response.json(), null, 2)
+      }
+
+      async function getMovieById() {
+        const response = await fetch(`/movies/${movieId.value}`)
+        movieById.innerText = JSON.stringify(await response.json(), null, 2)
+      }
+
+      async function updateRating() {
+        const response = await fetch(`/movies/${rateMovieId.value}/rating`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ rating: Number(newRating.value) }),
+        })
+
+        ratingResult.innerText = JSON.stringify(await response.json(), null, 2)
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>User Management</title>
+  </head>
+  <body>
+    <h2>👤 User Management System</h2>
+
+    <hr />
+
+    <h3>Create User</h3>
+    <label>Name</label><br />
+    <input id="name" placeholder="Name" /><br /><br />
+
+    <label>Email</label><br />
+    <input id="email" placeholder="Email" /><br /><br />
+
+    <label>Age</label><br />
+    <input id="age" type="number" /><br /><br />
+
+    <label>Active</label>
+    <input id="active" type="checkbox" /><br /><br />
+
+    <button onclick="createUser()">Create User</button>
+    <pre id="createResult"></pre>
+
+    <hr />
+
+    <h3>Get All Users</h3>
+    <button onclick="getUsers()">Load Users</button>
+    <pre id="usersList"></pre>
+
+    <hr />
+
+    <h3>Get User By ID</h3>
+    <input id="getUserId" type="number" placeholder="User ID" />
+    <button onclick="getUserById()">Get User</button>
+    <pre id="userById"></pre>
+
+    <hr />
+
+    <h3>Update User Active Status</h3>
+    <input id="statusUserId" type="number" placeholder="User ID" />
+
+    <select id="newStatus">
+      <option value="true">Active</option>
+      <option value="false">Inactive</option>
+    </select>
+
+    <button onclick="updateStatus()">Update Status</button>
+    <pre id="statusResult"></pre>
+
+    <script>
+      async function createUser() {
+        const response = await fetch('/users', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: name.value,
+            email: email.value,
+            age: Number(age.value),
+            active: active.checked,
+          }),
+        })
+
+        createResult.innerText = JSON.stringify(await response.json(), null, 2)
+      }
+
+      async function getUsers() {
+        const response = await fetch('/users')
+        usersList.innerText = JSON.stringify(await response.json(), null, 2)
+      }
+
+      async function getUserById() {
+        const response = await fetch(`/users/${getUserId.value}`)
+        userById.innerText = JSON.stringify(await response.json(), null, 2)
+      }
+
+      async function updateStatus() {
+        const response = await fetch(`/users/${statusUserId.value}/status`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            active: newStatus.value === 'true',
+          }),
+        })
+
+        statusResult.innerText = JSON.stringify(await response.json(), null, 2)
+      }
+    </script>
+  </body>
+</html>

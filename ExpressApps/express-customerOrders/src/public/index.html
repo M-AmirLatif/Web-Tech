@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Order Management</title>
+  </head>
+  <body>
+    <h2>🛒 Order Management System</h2>
+
+    <hr />
+
+    <h3>Create Order</h3>
+    <label>Customer Name</label><br />
+    <input id="customer" placeholder="Customer name" /><br /><br />
+
+    <label>Items (JSON)</label><br />
+    <textarea id="items" rows="6" cols="50">
+[
+  {"name":"Phone","price":500,"qty":1},
+  {"name":"Charger","price":50,"qty":2}
+]
+</textarea
+    >
+    <br /><br />
+
+    <button onclick="createOrder()">Create Order</button>
+    <pre id="createResult"></pre>
+
+    <hr />
+
+    <h3>Get All Orders</h3>
+    <button onclick="getOrders()">Load Orders</button>
+    <pre id="ordersList"></pre>
+
+    <hr />
+
+    <h3>Get Order By ID</h3>
+    <input id="getOrderId" type="number" placeholder="Order ID" />
+    <button onclick="getOrderById()">Get Order</button>
+    <pre id="orderById"></pre>
+
+    <hr />
+
+    <h3>Update Order Status</h3>
+    <input id="statusOrderId" type="number" placeholder="Order ID" />
+
+    <select id="status">
+      <option value="pending">pending</option>
+      <option value="paid">paid</option>
+      <option value="shipped">shipped</option>
+      <option value="cancelled">cancelled</option>
+    </select>
+
+    <button onclick="updateStatus()">Update Status</button>
+    <pre id="statusResult"></pre>
+
+    <hr />
+
+    <h3>Delete Order (Pending Only)</h3>
+    <input id="deleteOrderId" type="number" placeholder="Order ID" />
+    <button onclick="deleteOrder()">Delete Order</button>
+    <pre id="deleteResult"></pre>
+
+    <script>
+      async function createOrder() {
+        let items
+
+        try {
+          items = JSON.parse(document.getElementById('items').value)
+        } catch {
+          createResult.innerText = 'Invalid items JSON'
+          return
+        }
+
+        const response = await fetch('/orders', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            customer: customer.value,
+            items,
+          }),
+        })
+
+        createResult.innerText = JSON.stringify(await response.json(), null, 2)
+      }
+
+      async function getOrders() {
+        const response = await fetch('/orders')
+        ordersList.innerText = JSON.stringify(await response.json(), null, 2)
+      }
+
+      async function getOrderById() {
+        const response = await fetch(`/orders/${getOrderId.value}`)
+        orderById.innerText = JSON.stringify(await response.json(), null, 2)
+      }
+
+      async function updateStatus() {
+        const response = await fetch(`/orders/${statusOrderId.value}/status`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            status: status.value,
+          }),
+        })
+
+        statusResult.innerText = JSON.stringify(await response.json(), null, 2)
+      }
+
+      async function deleteOrder() {
+        const response = await fetch(`/orders/${deleteOrderId.value}`, {
+          method: 'DELETE',
+        })
+
+        deleteResult.innerText = JSON.stringify(await response.json(), null, 2)
+      }
+    </script>
+  </body>
+</html>

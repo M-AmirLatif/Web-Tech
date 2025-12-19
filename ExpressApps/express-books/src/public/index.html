@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Book Management</title>
+  </head>
+  <body>
+    <h2>📚 Book Management System</h2>
+
+    <hr />
+
+    <h3>Add Book</h3>
+    <input id="title" placeholder="Title" /><br /><br />
+    <input id="author" placeholder="Author" /><br /><br />
+    <input id="price" type="number" placeholder="Price" /><br /><br />
+
+    <button onclick="addBook()">Add Book</button>
+    <pre id="addResult"></pre>
+
+    <hr />
+
+    <h3>Get All Books</h3>
+    <button onclick="getBooks()">Load Books</button>
+    <pre id="booksList"></pre>
+
+    <hr />
+
+    <h3>Get Book By ID</h3>
+    <input id="getBookId" type="number" placeholder="Book ID" />
+    <button onclick="getBookById()">Get Book</button>
+    <pre id="bookById"></pre>
+
+    <hr />
+
+    <h3>Update Book</h3>
+    <input id="updateBookId" type="number" placeholder="Book ID" /><br /><br />
+    <input id="updateTitle" placeholder="New Title" /><br /><br />
+    <input id="updateAuthor" placeholder="New Author" /><br /><br />
+    <input id="updatePrice" type="number" placeholder="New Price" /><br /><br />
+
+    <button onclick="updateBook()">Update Book</button>
+    <pre id="updateResult"></pre>
+
+    <hr />
+
+    <h3>Delete Book</h3>
+    <input id="deleteBookId" type="number" placeholder="Book ID" />
+    <button onclick="deleteBook()">Delete Book</button>
+    <pre id="deleteResult"></pre>
+
+    <script>
+      async function addBook() {
+        const response = await fetch('/books', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            title: title.value,
+            author: author.value,
+            price: Number(price.value),
+          }),
+        })
+
+        addResult.innerText = JSON.stringify(await response.json(), null, 2)
+      }
+
+      async function getBooks() {
+        const response = await fetch('/books')
+        booksList.innerText = JSON.stringify(await response.json(), null, 2)
+      }
+
+      async function getBookById() {
+        const response = await fetch(`/books/${getBookId.value}`)
+        bookById.innerText = JSON.stringify(await response.json(), null, 2)
+      }
+
+      async function updateBook() {
+        const response = await fetch(`/books/${updateBookId.value}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            title: updateTitle.value,
+            author: updateAuthor.value,
+            price: Number(updatePrice.value),
+          }),
+        })
+
+        updateResult.innerText = JSON.stringify(await response.json(), null, 2)
+      }
+
+      async function deleteBook() {
+        const response = await fetch(`/books/${deleteBookId.value}`, {
+          method: 'DELETE',
+        })
+
+        deleteResult.innerText = JSON.stringify(await response.json(), null, 2)
+      }
+    </script>
+  </body>
+</html>

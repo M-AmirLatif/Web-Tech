@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Temperature Converter</title>
+  </head>
+  <body>
+    <h2>Temperature Converter</h2>
+
+    <input type="number" id="value" placeholder="Enter temperature" />
+
+    <br /><br />
+
+    <select id="scale">
+      <option value="toCelsius">Fahrenheit → Celsius</option>
+      <option value="toFahrenheit">Celsius → Fahrenheit</option>
+      <option value="toKelvin">Celsius → Kelvin</option>
+      <option value="fromKelvin">Kelvin → Celsius</option>
+    </select>
+
+    <br /><br />
+
+    <button onclick="convert()">Convert</button>
+
+    <h3 id="result"></h3>
+
+    <script>
+      async function convert() {
+        const value = Number(document.getElementById('value').value)
+        const scale = document.getElementById('scale').value
+
+        const response = await fetch(`/convert/${scale}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ value }),
+        })
+
+        const data = await response.json()
+
+        const resultEl = document.getElementById('result')
+
+        if (data.result !== undefined) {
+          resultEl.innerText = `Result: ${data.result.toFixed(2)}`
+        } else {
+          resultEl.innerText = `Error: ${data.error}`
+        }
+      }
+    </script>
+  </body>
+</html>

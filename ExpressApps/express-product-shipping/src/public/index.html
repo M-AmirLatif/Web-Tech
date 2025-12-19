@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Order Processing</title>
+  </head>
+  <body>
+    <h2>Order Processing System</h2>
+
+    <h3>Items</h3>
+    <textarea id="items" rows="6" cols="50">
+[
+  {"name":"Laptop","price":1000,"qty":1,"category":"electronics"},
+  {"name":"Book","price":50,"qty":2,"category":"other"}
+]
+</textarea
+    >
+
+    <p><small>Edit items as JSON</small></p>
+
+    <h3>User Info</h3>
+    <label>Age:</label><br />
+    <input type="number" id="age" /><br /><br />
+
+    <label>VIP:</label>
+    <input type="checkbox" id="vip" /><br /><br />
+
+    <h3>Coupon</h3>
+    <input
+      type="text"
+      id="coupon"
+      placeholder="NEW10 / ELEC5 / FREESHIP"
+    /><br /><br />
+
+    <h3>Shipping</h3>
+
+    <label>Country:</label><br />
+    <select id="country">
+      <option value="usa">USA</option>
+      <option value="canada">Canada</option>
+      <option value="uk">UK</option>
+      <option value="india">India</option>
+    </select>
+
+    <br /><br />
+
+    <label>Shipping Method:</label><br />
+    <select id="shippingMethod">
+      <option value="standard">Standard</option>
+      <option value="express">Express</option>
+      <option value="overnight">Overnight</option>
+    </select>
+
+    <br /><br />
+
+    <button onclick="processOrder()">Process Order</button>
+
+    <h3>Result</h3>
+    <pre id="result"></pre>
+
+    <script>
+      async function processOrder() {
+        let items
+
+        try {
+          items = JSON.parse(document.getElementById('items').value)
+        } catch {
+          document.getElementById('result').innerText = 'Invalid items JSON'
+          return
+        }
+
+        const age = Number(document.getElementById('age').value)
+        const vip = document.getElementById('vip').checked
+        const coupon = document.getElementById('coupon').value
+        const country = document.getElementById('country').value
+        const shippingMethod = document.getElementById('shippingMethod').value
+
+        const response = await fetch(
+          `/order/process/${country}/${shippingMethod}`,
+          {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              items,
+              coupon,
+              user: {
+                age,
+                vip,
+              },
+            }),
+          }
+        )
+
+        const data = await response.json()
+
+        document.getElementById('result').innerText = JSON.stringify(
+          data,
+          null,
+          2
+        )
+      }
+    </script>
+  </body>
+</html>

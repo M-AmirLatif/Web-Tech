@@ -1,0 +1,16 @@
+extends ../layout
+
+block content
+  h1 Cart
+
+  if cart.length === 0
+    p Your cart is empty.
+  else
+    ul
+      each item in cart
+        li #{item.name} - $#{item.price}
+
+    p
+      strong Total:
+      |  $
+      = cart.reduce((sum, item) => sum + item.price, 0)
